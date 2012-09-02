@@ -5,6 +5,8 @@ Underscore-to-camelCase converter (and vice versa) for strings and object keys i
 
 When converting object keys, it will walk the structure, converting any nested objects (or arrays of nested objects) along the way. Handy for converting JSON between JavaScript and Ruby/Rails APIs.
 
+Dependencies: Underscore.js
+
 Usage
 -----
 
