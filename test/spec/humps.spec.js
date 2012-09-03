@@ -82,6 +82,18 @@ describe("humps", function() {
     it("should convert complex object keys to camelcase", function() {
       expect(humps.camelizeKeys(this.complex_Obj)).toEqual(this.complexCamelObj);
     });
+    
+    it("should not attempt to process dates", function() {
+      'work in progress';
+      var date = new Date();
+      var _object = {
+        a_date: date
+      };
+      var convertedObject = {
+        aDate: date
+      };
+      expect(humps.camelizeKeys(_object)).toEqual(convertedObject);
+    });
   });
   
   describe(".decamelizeKeys", function() {

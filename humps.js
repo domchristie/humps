@@ -1,7 +1,7 @@
 // =========
 // = humps =
 // =========
-// version 0.1
+// version 0.1.1
 // Underscore-to-camelCase converter (and vice versa)
 // for strings and object keys
 
@@ -11,35 +11,34 @@
 
 var humps = (function() {
   
-  var _processObject = function(convert, obj, separator) {
-    if(typeof obj !== 'object') {
+  var _processKeys = function(convert, obj, separator) {
+    if(!_.isObject(obj) || _.isDate(obj)) {
       return obj;
     }
-    
     var output = {};
     _.each(obj, function(val, key) {
       
       if(_.isArray(val)) {
         var convertedArray = [];
         _.each(val, function(item) {
-          convertedArray.push(_processObject(convert, item, separator));
+          convertedArray.push(_processKeys(convert, item, separator));
         });
         output[convert(key, separator)] = convertedArray;
       }
       else if(_.isObject(val)) {
         output[convert(key, separator)] = 
-          _processObject(convert, val, separator);
+          _processKeys(convert, val, separator);
       }
       else {
-        output[convert(key, separator)] = obj[key];
+        output[convert(key, separator)] = val;
       }
     });
     return output;
-  }
+  };
   
   var camelize = function(string) {
-    return string.replace(/[\-_\s]+(.)?/g, function(match, char) {
-      return char ? char.toUpperCase() : '';
+    return string.replace(/[\-_\s]+(.)?/g, function(match, chr) {
+      return chr ? chr.toUpperCase() : '';
     });
   };
   
@@ -54,11 +53,11 @@ var humps = (function() {
     camelize: camelize,
     decamelize: decamelize,
     camelizeKeys: function(object) {
-      return _processObject(camelize, object);
+      return _processKeys(camelize, object);
     },
     decamelizeKeys: function(object, separator) {
-      return _processObject(decamelize, object, separator);
+      return _processKeys(decamelize, object, separator);
     }
-  }
+  };
   
 })();
