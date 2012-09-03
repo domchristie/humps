@@ -1,7 +1,7 @@
 // =========
 // = humps =
 // =========
-// version 0.1.1
+// version 0.1.2
 // Underscore-to-camelCase converter (and vice versa)
 // for strings and object keys
 
@@ -9,7 +9,7 @@
 // Released under the MIT license.
 
 
-var humps = (function() {
+;(function(global) {
   
   var _processKeys = function(convert, obj, separator) {
     if(!_.isObject(obj) || _.isDate(obj)) {
@@ -43,13 +43,13 @@ var humps = (function() {
   };
   
   var decamelize = function(string, separator) {
-    if (separator == null) {
+    if (separator === undefined) {
       separator = '_';
     }
     return string.replace(/([a-z])([A-Z0-9])/g, '$1'+ separator +'$2').toLowerCase();
   };
   
-  return {
+  global.humps = {
     camelize: camelize,
     decamelize: decamelize,
     camelizeKeys: function(object) {
@@ -60,4 +60,4 @@ var humps = (function() {
     }
   };
   
-})();
+})(this);
