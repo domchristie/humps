@@ -1,7 +1,7 @@
 // =========
 // = humps =
 // =========
-// version 0.2
+// version 0.3
 // Underscore-to-camelCase converter (and vice versa)
 // for strings and object keys
 
@@ -17,10 +17,10 @@
     }
     var output = {};
     
+    // Loop over each key/array item
     for(var key in obj) {
       if(obj.hasOwnProperty(key)) {
         var val = obj[key];
-        
         if(_isArray(val)) {
           var convertedArray = [];
           for(var i=0, l=val.length; i<l; i++) {
@@ -40,18 +40,37 @@
     return output;
   };
   
+  // String conversion methods
+  
+  var separateWords = function(string, separator) {
+    if (separator === undefined) {
+      separator = '_';
+    }
+    return string.replace(/([a-z])([A-Z0-9])/g, '$1'+ separator +'$2');
+  };
+  
   var camelize = function(string) {
-    return string.replace(/[\-_\s]+(.)?/g, function(match, chr) {
+    string = string.replace(/[\-_\s]+(.)?/g, function(match, chr) {
+      return chr ? chr.toUpperCase() : '';
+    });
+    // Ensure 1st char is always lowercase
+    return string.replace(/^([A-Z])/, function(match, chr) {
+      return chr ? chr.toLowerCase() : '';
+    });
+  };
+  
+  var pascalize = function(string) {
+    return camelize(string).replace(/^([a-z])/, function(match, chr) {
       return chr ? chr.toUpperCase() : '';
     });
   };
   
   var decamelize = function(string, separator) {
-    if (separator === undefined) {
-      separator = '_';
-    }
-    return string.replace(/([a-z])([A-Z0-9])/g, '$1'+ separator +'$2').toLowerCase();
+    return separateWords(string, separator).toLowerCase();
   };
+  
+  // Utilities
+  // Taken from Underscore.js
   
   var _isObject = function(obj) {
     return obj === Object(obj);
@@ -69,12 +88,18 @@
   global.humps = {
     camelize: camelize,
     decamelize: decamelize,
+    pascalize: pascalize,
+    depascalize: decamelize,
     camelizeKeys: function(object) {
       return _processKeys(camelize, object);
     },
     decamelizeKeys: function(object, separator) {
       return _processKeys(decamelize, object, separator);
-    }
+    },
+    pascalizeKeys: function(object) {
+      return _processKeys(pascalize, object);
+    },
+    depascalizeKeys: this.decamelizeKeys
   };
   
 })(this);

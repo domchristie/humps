@@ -15,6 +15,11 @@ describe("humps", function() {
       attrTwo: "bar"
     };
     
+    this.simplePascalObj = {
+      AttrOne: "foo",
+      AttrTwo: "bar"
+    };
+    
     this.complex_Obj = {
       attr_one: "foo",
       attr_two: {
@@ -46,6 +51,24 @@ describe("humps", function() {
             nestedInArray2: "hello"
           }, {
             nestedInArray3: ["world", "boo"]
+          }]
+        }
+      }
+    };
+    
+    this.complexPascalObj = {
+      AttrOne: "foo",
+      AttrTwo: {
+        NestedAttr1: "bar"
+      },
+      AttrThree: {
+        NestedAttr2: {
+          NestedAttr3: [{
+            NestedInArray1: "baz"
+          }, {
+            NestedInArray2: "hello"
+          }, {
+            NestedInArray3: ["world", "boo"]
           }]
         }
       }
@@ -110,6 +133,28 @@ describe("humps", function() {
     });
   });
   
+  describe(".pascalizeKeys", function() {
+    it("should convert simple object keys to PascalCase", function() {
+      expect(humps.pascalizeKeys(this.simple_Obj)).toEqual(this.simplePascalObj);
+    });
+    
+    it("should convert complex object keys to PascalCase", function() {
+      expect(humps.pascalizeKeys(this.complex_Obj)).toEqual(this.complexPascalObj);
+    });
+    
+    it("should not attempt to process dates", function() {
+      'work in progress';
+      var date = new Date();
+      var _object = {
+        a_date: date
+      };
+      var convertedObject = {
+        ADate: date
+      };
+      expect(humps.pascalizeKeys(_object)).toEqual(convertedObject);
+    });
+  });
+  
   describe(".camelize", function() {
     it("should convert underscored strings to camelcase", function() {
       expect(humps.camelize('hello_world')).toEqual('helloWorld');
@@ -122,6 +167,10 @@ describe("humps", function() {
     it("should convert space-separated strings to camelcase", function() {
       expect(humps.camelize('hello world')).toEqual('helloWorld');
     });
+    
+    it("should convert PascalCased strings to camelcase", function() {
+      expect(humps.camelize('HelloWorld')).toEqual('helloWorld');
+    });
   });
   
   describe(".decamelize", function() {
@@ -131,6 +180,20 @@ describe("humps", function() {
     
     it("should decamelize strings with custom separator", function() {
       expect(humps.decamelize('helloWorld', '-')).toEqual('hello-world');
+    });
+  });
+  
+  describe(".pascalize", function() {
+    it("should convert underscored strings to PascalCase", function() {
+      expect(humps.pascalize('hello_world')).toEqual('HelloWorld');
+    });
+    
+    it("should convert hyphenated strings to PascalCase", function() {
+      expect(humps.pascalize('hello-world')).toEqual('HelloWorld');
+    });
+    
+    it("should convert space-separated strings to PascalCase", function() {
+      expect(humps.pascalize('hello world')).toEqual('HelloWorld');
     });
   });
 
