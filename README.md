@@ -1,4 +1,4 @@
-humps
+humps ![Build status](https://secure.travis-ci.org/domchristie/humps.png)
 =====
 
 Underscore-to-camelCase converter (and vice versa) for strings and object keys in JavaScript.
