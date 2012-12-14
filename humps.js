@@ -71,7 +71,9 @@
   
   // Utilities
   // Taken from Underscore.js
-  
+
+  var toString = Object.prototype.toString;
+
   var _isObject = function(obj) {
     return obj === Object(obj);
   };
