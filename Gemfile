@@ -1,4 +1,3 @@
-source :rubygems
-gem 'jasmine', "~> 1.2"
-gem 'growl'
+source 'https://rubygems.org'
+gem 'jasmine'
 gem 'rake'
