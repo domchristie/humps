@@ -31,6 +31,18 @@ Usage
     object.attrOne === "foo"; // true
     object.attrTwo === "bar"; // true
 
+Arrays of objects are also converted
+
+    var array = [
+      { attr_one: "foo" },
+      { attr_one: "bar" }
+    ];
+
+    array = humps.camelizeKeys(array);
+
+    array[0].attrOne === "foo"; // true
+    array[1].attrOne === "bar"; // true
+
 Licence
 -------
-humps is copyright &copy; 2012 [Dom Christie](http://domchristie.co.uk) and released under the MIT license.
+humps is copyright &copy; 2013 [Dom Christie](http://domchristie.co.uk) and released under the MIT license.

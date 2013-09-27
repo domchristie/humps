@@ -117,6 +117,15 @@ describe("humps", function() {
       };
       expect(humps.camelizeKeys(_object)).toEqual(convertedObject);
     });
+
+    it('should convert keys within arrays of objects', function() {
+      var array = [{ first_name: "Sam" }, { first_name: "Jenna" }],
+          convertedArray = [{ firstName: "Sam" }, { firstName: "Jenna" }],
+          result = humps.camelizeKeys(array);
+      expect(result).toEqual(convertedArray);
+      // Ensure it’s an array, and not an object with numeric keys
+      expect(toString.call(result)).toEqual('[object Array]');
+    });
   });
   
   describe(".decamelizeKeys", function() {

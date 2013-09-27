@@ -1,11 +1,11 @@
 // =========
 // = humps =
 // =========
-// version 0.3
+// version 0.4
 // Underscore-to-camelCase converter (and vice versa)
 // for strings and object keys
 
-// humps is copyright © 2012 Dom Christie
+// humps is copyright © 2013 Dom Christie
 // Released under the MIT license.
 
 
@@ -15,25 +15,37 @@
     if(!_isObject(obj) || _isDate(obj) || _isRegExp(obj)) {
       return obj;
     }
-    var output = {};
-    
-    // Loop over each key/array item
-    for(var key in obj) {
-      if(obj.hasOwnProperty(key)) {
-        var val = obj[key];
-        if(_isArray(val)) {
-          var convertedArray = [];
-          for(var i=0, l=val.length; i<l; i++) {
-            convertedArray.push(_processKeys(convert, val[i], separator));
+
+    var output,
+        i = 0,
+        l = 0;
+
+    if(_isArray(obj)) {
+      output = [];
+      for(l=obj.length; i<l; i++) {
+        output.push(_processKeys(convert, obj[i], separator));
+      }
+    }
+    else {
+      output = {};
+      for(var key in obj) {
+        if(obj.hasOwnProperty(key)) {
+          var val = obj[key];
+          if(_isArray(val)) {
+            var convertedArray = [];
+            i = 0;
+            for(l=val.length; i<l; i++) {
+              convertedArray.push(_processKeys(convert, val[i], separator));
+            }
+            output[convert(key, separator)] = convertedArray;
           }
-          output[convert(key, separator)] = convertedArray;
-        }
-        else if(_isObject(val)) {
-          output[convert(key, separator)] = 
-            _processKeys(convert, val, separator);
-        }
-        else {
-          output[convert(key, separator)] = val;
+          else if(_isObject(val)) {
+            output[convert(key, separator)] = 
+              _processKeys(convert, val, separator);
+          }
+          else {
+            output[convert(key, separator)] = val;
+          }
         }
       }
     }
