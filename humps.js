@@ -95,7 +95,7 @@
   var _isDate = function(obj) {
     return toString.call(obj) == '[object Date]';
   };
-  _isRegExp = function(obj) {
+  var _isRegExp = function(obj) {
     return toString.call(obj) == '[object RegExp]';
   };
   
