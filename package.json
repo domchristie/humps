@@ -1,6 +1,6 @@
 {
   "name": "humps",
-  "version": "0.0.1",
+  "version": "0.4.2",
   "description": "Underscore-to-camelCase converter (and vice versa) for strings and object keys in JavaScript.",
   "main": "humps.js",
   "scripts": {

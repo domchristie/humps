@@ -1,7 +1,7 @@
 // =========
 // = humps =
 // =========
-// version 0.4.1
+// version 0.4.2
 // Underscore-to-camelCase converter (and vice versa)
 // for strings and object keys
 
