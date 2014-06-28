@@ -30,22 +30,7 @@
       output = {};
       for(var key in obj) {
         if(obj.hasOwnProperty(key)) {
-          var val = obj[key];
-          if(_isArray(val)) {
-            var convertedArray = [];
-            i = 0;
-            for(l=val.length; i<l; i++) {
-              convertedArray.push(_processKeys(convert, val[i], separator));
-            }
-            output[convert(key, separator)] = convertedArray;
-          }
-          else if(_isObject(val)) {
-            output[convert(key, separator)] =
-              _processKeys(convert, val, separator);
-          }
-          else {
-            output[convert(key, separator)] = val;
-          }
+          output[convert(key, separator)] = _processKeys(convert, obj[key], separator);
         }
       }
     }
