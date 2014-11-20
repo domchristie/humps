@@ -97,9 +97,10 @@
     },
     pascalizeKeys: function(object) {
       return _processKeys(pascalize, object);
-    },
-    depascalizeKeys: this.decamelizeKeys
+    }
   };
+
+  humps.depascalizeKeys = humps.decamelizeKeys;
 
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = humps;
