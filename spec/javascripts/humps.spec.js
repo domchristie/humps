@@ -5,7 +5,7 @@ describe("humps", function() {
   // =========
 
   beforeEach(function() {
-    this.simple_Obj = {
+    this.simple_obj = {
       attr_one: "foo",
       attr_two: "bar"
     };
@@ -20,7 +20,7 @@ describe("humps", function() {
       AttrTwo: "bar"
     };
 
-    this.complex_Obj = {
+    this.complex_obj = {
       attr_one: "foo",
       attr_two: {
         nested_attr_1: "bar"
@@ -99,11 +99,11 @@ describe("humps", function() {
 
   describe(".camelizeKeys", function() {
     it("should convert simple object keys to camelcase", function() {
-      expect(humps.camelizeKeys(this.simple_Obj)).toEqual(this.simpleCamelObj);
+      expect(humps.camelizeKeys(this.simple_obj)).toEqual(this.simpleCamelObj);
     });
 
     it("should convert complex object keys to camelcase", function() {
-      expect(humps.camelizeKeys(this.complex_Obj)).toEqual(this.complexCamelObj);
+      expect(humps.camelizeKeys(this.complex_obj)).toEqual(this.complexCamelObj);
     });
 
     it("should not attempt to process dates", function() {
@@ -130,11 +130,11 @@ describe("humps", function() {
 
   describe(".decamelizeKeys", function() {
     it("should convert simple object keys to camelcase", function() {
-      expect(humps.decamelizeKeys(this.simpleCamelObj)).toEqual(this.simple_Obj);
+      expect(humps.decamelizeKeys(this.simpleCamelObj)).toEqual(this.simple_obj);
     });
 
     it("should convert complex object keys to camelcase", function() {
-      expect(humps.decamelizeKeys(this.complexCamelObj)).toEqual(this.complex_Obj);
+      expect(humps.decamelizeKeys(this.complexCamelObj)).toEqual(this.complex_obj);
     });
 
     it("should decamelize keys with a custom separator", function() {
@@ -144,11 +144,11 @@ describe("humps", function() {
 
   describe(".pascalizeKeys", function() {
     it("should convert simple object keys to PascalCase", function() {
-      expect(humps.pascalizeKeys(this.simple_Obj)).toEqual(this.simplePascalObj);
+      expect(humps.pascalizeKeys(this.simple_obj)).toEqual(this.simplePascalObj);
     });
 
     it("should convert complex object keys to PascalCase", function() {
-      expect(humps.pascalizeKeys(this.complex_Obj)).toEqual(this.complexPascalObj);
+      expect(humps.pascalizeKeys(this.complex_obj)).toEqual(this.complexPascalObj);
     });
 
     it("should not attempt to process dates", function() {
@@ -166,11 +166,11 @@ describe("humps", function() {
 
   describe(".depascalizeKeys", function() {
     it("should convert simple object with PascalCase keys to underscored", function() {
-      expect(humps.depascalizeKeys(this.simplePascalObj)).toEqual(this.simple_Obj);
+      expect(humps.depascalizeKeys(this.simplePascalObj)).toEqual(this.simple_obj);
     });
 
     it("should convert complex object with PascalCase keys to underscored", function() {
-      expect(humps.depascalizeKeys(this.complexPascalObj)).toEqual(this.complex_Obj);
+      expect(humps.depascalizeKeys(this.complexPascalObj)).toEqual(this.complex_obj);
     });
 
     it("should depascalize keys with a custom separator", function() {
