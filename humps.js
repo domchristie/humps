@@ -98,7 +98,9 @@
     pascalizeKeys: function(object) {
       return _processKeys(pascalize, object);
     },
-    depascalizeKeys: this.decamelizeKeys
+    depascalizeKeys: function () {
+      return this.decamelizeKeys.apply(this, arguments);
+    }
   };
 
   if (typeof module !== 'undefined' && module.exports) {
