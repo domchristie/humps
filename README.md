@@ -20,14 +20,14 @@ Usage
     humps.decamelize("helloWorld", "-"); // "hello-world"
 
 ### Converting object keys
-    
+
     var object = {
       attr_one: "foo",
       attr_two: "bar"
     };
-    
+
     object = humps.camelizeKeys(object);
-    
+
     object.attrOne === "foo"; // true
     object.attrTwo === "bar"; // true
 
@@ -45,4 +45,4 @@ Arrays of objects are also converted
 
 Licence
 -------
-humps is copyright &copy; 2013 [Dom Christie](http://domchristie.co.uk) and released under the MIT license.
+humps is copyright &copy; 2014 [Dom Christie](http://domchristie.co.uk) and released under the MIT license.
