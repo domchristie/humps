@@ -103,7 +103,9 @@
     }
   };
 
-  if (typeof module !== 'undefined' && module.exports) {
+  if (typeof define === 'function' && define.amd) {
+    define(humps);
+  } else if (typeof module !== 'undefined' && module.exports) {
     module.exports = humps;
   } else {
     global.humps = humps;
