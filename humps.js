@@ -12,7 +12,7 @@
 ;(function(global) {
 
   var _processKeys = function(convert, obj, separator) {
-    if(!_isObject(obj) || _isDate(obj) || _isvoidElementsp(obj)) {
+    if(!_isObject(obj) || _isDate(obj) || _isRegExp(obj)) {
       return obj;
     }
 
@@ -80,8 +80,8 @@
   var _isDate = function(obj) {
     return toString.call(obj) == '[object Date]';
   };
-  var _isvoidElementsp = function(obj) {
-    return toString.call(obj) == '[object voidElementsp]';
+  var _isRegExp = function(obj) {
+    return toString.call(obj) == '[object RegExp]';
   };
 
   var humps = {
