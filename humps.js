@@ -56,15 +56,13 @@
       return chr ? chr.toUpperCase() : '';
     });
     // Ensure 1st char is always lowercase
-    return string.replace(/^([A-Z])/, function(match, chr) {
-      return chr ? chr.toLowerCase() : '';
-    });
+    return string.substr(0, 1).toLowerCase() + string.substr(1);
   };
 
   var pascalize = function(string) {
-    return camelize(string).replace(/^([a-z])/, function(match, chr) {
-      return chr ? chr.toUpperCase() : '';
-    });
+    var camelized = camelize(string);
+    // Ensure 1st char is always uppercase
+    return camelized.substr(0, 1).toUpperCase() + camelized.substr(1);
   };
 
   var decamelize = function(string, separator) {
