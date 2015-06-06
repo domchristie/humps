@@ -40,13 +40,18 @@
   // String conversion methods
 
   var separateWords = function(string, separator) {
-    if (separator === undefined) {
+    if (typeof separator === 'undefined') {
       separator = '_';
     }
     return string.replace(/([a-z])([A-Z0-9])/g, '$1'+ separator +'$2');
   };
 
   var camelize = function(string) {
+    // efficiently checks if a key is a number
+    var number = string - 0;
+    if (number === number) {
+      return string;
+    }
     string = string.replace(/[\-_\s]+(.)?/g, function(match, chr) {
       return chr ? chr.toUpperCase() : '';
     });
