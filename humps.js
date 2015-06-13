@@ -47,8 +47,7 @@
   };
 
   var camelize = function(string) {
-    // checks if a key is a number
-    if (!_isNaN(string - 0)) {
+    if (_isNumerical(string)) {
       return string;
     }
     string = string.replace(/[\-_\s]+(.)?/g, function(match, chr) {
@@ -86,12 +85,10 @@
     return toString.call(obj) == '[object RegExp]';
   };
 
-  var _isNaN = function(number) {
-    /**
-     * NaN is the only thing not equal to itself in Javascript.
-     * We can use that to efficiently check whether something is NaN.
-     */
-    return number !== number;
+  // Performant way to determine if obj coerces to a number
+  var _isNumerical = function(obj) {
+    obj = obj - 0;
+    return obj === obj;
   };
 
   var humps = {
