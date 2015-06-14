@@ -40,26 +40,27 @@
   // String conversion methods
 
   var separateWords = function(string, separator) {
-    if (separator === undefined) {
+    if (typeof separator === 'undefined') {
       separator = '_';
     }
     return string.replace(/([a-z])([A-Z0-9])/g, '$1'+ separator +'$2');
   };
 
   var camelize = function(string) {
+    if (_isNumerical(string)) {
+      return string;
+    }
     string = string.replace(/[\-_\s]+(.)?/g, function(match, chr) {
       return chr ? chr.toUpperCase() : '';
     });
     // Ensure 1st char is always lowercase
-    return string.replace(/^([A-Z])/, function(match, chr) {
-      return chr ? chr.toLowerCase() : '';
-    });
+    return string.substr(0, 1).toLowerCase() + string.substr(1);
   };
 
   var pascalize = function(string) {
-    return camelize(string).replace(/^([a-z])/, function(match, chr) {
-      return chr ? chr.toUpperCase() : '';
-    });
+    var camelized = camelize(string);
+    // Ensure 1st char is always uppercase
+    return camelized.substr(0, 1).toUpperCase() + camelized.substr(1);
   };
 
   var decamelize = function(string, separator) {
@@ -82,6 +83,12 @@
   };
   var _isRegExp = function(obj) {
     return toString.call(obj) == '[object RegExp]';
+  };
+
+  // Performant way to determine if obj coerces to a number
+  var _isNumerical = function(obj) {
+    obj = obj - 0;
+    return obj === obj;
   };
 
   var humps = {

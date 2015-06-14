@@ -120,9 +120,9 @@ describe('humps', function() {
     });
 
     it('converts keys within arrays of objects', function() {
-      var array = [{ first_name: 'Sam' }, { first_name: 'Jenna' }],
-          convertedArray = [{ firstName: 'Sam' }, { firstName: 'Jenna' }],
-          result = humps.camelizeKeys(array);
+      var array = [{first_name: 'Sam'}, {first_name: 'Jenna'}],
+        convertedArray = [{firstName: 'Sam'}, {firstName: 'Jenna'}],
+        result = humps.camelizeKeys(array);
       expect(result).toEqual(convertedArray);
       // Ensure it’s an array, and not an object with numeric keys
       expect(toString.call(result)).toEqual('[object Array]');
@@ -186,6 +186,7 @@ describe('humps', function() {
 
     it('converts hyphenated strings to camelcase', function() {
       expect(humps.camelize('hello-world')).toEqual('helloWorld');
+      expect(humps.camelize('hello-world-1')).toEqual('helloWorld1');
     });
 
     it('converts space-separated strings to camelcase', function() {
@@ -194,6 +195,12 @@ describe('humps', function() {
 
     it('converts PascalCased strings to camelcase', function() {
       expect(humps.camelize('HelloWorld')).toEqual('helloWorld');
+      expect(humps.camelize('HelloWorld')).toEqual('helloWorld');
+    });
+
+    it('keeps numbers unchanged', function() {
+      expect(humps.camelize('-1')).toEqual('-1');
+      expect(humps.camelize('1')).toEqual('1');
     });
   });
 
