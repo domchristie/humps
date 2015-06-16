@@ -43,7 +43,7 @@
     if (typeof separator === 'undefined') {
       separator = '_';
     }
-    return string.replace(/([a-z])([A-Z0-9])/g, '$1'+ separator +'$2');
+    return string.replace(/([a-z])([A-Z])/g, '$1'+ separator +'$2');
   };
 
   var camelize = function(string) {
