@@ -24,16 +24,16 @@ describe('humps', function() {
     this.complex_obj = {
       attr_one: 'foo',
       attr_two: {
-        nested_attr_1: 'bar'
+        nested_attr1: 'bar'
       },
       attr_three: {
-        nested_attr_2: {
-          nested_attr_3: [{
-            nested_in_array_1: 'baz'
+        nested_attr2: {
+          nested_attr3: [{
+            nested_in_array1: 'baz'
           }, {
-            nested_in_array_2: 'hello'
+            nested_in_array2: 'hello'
           }, {
-            nested_in_array_3: ['world', 'boo']
+            nested_in_array3: ['world', 'boo']
           }]
         }
       }
@@ -78,16 +78,16 @@ describe('humps', function() {
     this.complexCustomObj = {
       'attr-one': 'foo',
       'attr-two': {
-        'nested-attr-1': 'bar'
+        'nested-attr1': 'bar'
       },
       'attr-three': {
-        'nested-attr-2': {
-          'nested-attr-3': [{
-            'nested-in-array-1': 'baz'
+        'nested-attr2': {
+          'nested-attr3': [{
+            'nested-in-array1': 'baz'
           }, {
-            'nested-in-array-2': 'hello'
+            'nested-in-array2': 'hello'
           }, {
-            'nested-in-array-3': ['world', 'boo']
+            'nested-in-array3': ['world', 'boo']
           }]
         }
       }
