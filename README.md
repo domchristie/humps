@@ -19,6 +19,13 @@ Usage
 
     humps.decamelize("helloWorld", "-"); // "hello-world"
 
+### Decamelizing strings and ignoring numbers
+
+    humps.decamelize(string, separator, ignoreNumbers);
+    humps.decamelize("helloWorld1", null, true); // "hello_world1"
+
+Note: ignoring numbers will be the default in v1.
+
 ### Converting object keys
 
     var object = {
@@ -45,4 +52,4 @@ Arrays of objects are also converted
 
 Licence
 -------
-humps is copyright &copy; 2014 [Dom Christie](http://domchristie.co.uk) and released under the MIT license.
+humps is copyright &copy; 2012+ [Dom Christie](http://domchristie.co.uk) and released under the MIT license.
