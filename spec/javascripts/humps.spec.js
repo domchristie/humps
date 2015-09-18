@@ -75,6 +75,24 @@ describe('humps', function() {
       }
     };
 
+    this.complexIgnoringNumbersObj = {
+      attr_one: 'foo',
+      attr_two: {
+        nested_attr1: 'bar'
+      },
+      attr_three: {
+        nested_attr2: {
+          nested_attr3: [{
+            nested_in_array1: 'baz'
+          }, {
+            nested_in_array2: 'hello'
+          }, {
+            nested_in_array3: ['world', 'boo']
+          }]
+        }
+      }
+    };
+
     this.complexCustomObj = {
       'attr-one': 'foo',
       'attr-two': {
@@ -141,6 +159,10 @@ describe('humps', function() {
     it('decamelizes keys with a custom separator', function() {
       expect(humps.decamelizeKeys(this.complexCamelObj, '-')).toEqual(this.complexCustomObj);
     });
+
+    it('decamelizes keys ignoring numbers', function() {
+      expect(humps.decamelizeKeys(this.complexCamelObj, '_', true)).toEqual(this.complexIgnoringNumbersObj);
+    });
   });
 
   describe('.pascalizeKeys', function() {
@@ -177,6 +199,10 @@ describe('humps', function() {
     it('depascalizes keys with a custom separator', function() {
       expect(humps.depascalizeKeys(this.complexPascalObj, '-')).toEqual(this.complexCustomObj);
     });
+
+    it('depascalizes keys ignoring numbers', function() {
+      expect(humps.depascalizeKeys(this.complexPascalObj, '_', true)).toEqual(this.complexIgnoringNumbersObj);
+    });
   });
 
   describe('.camelize', function() {
@@ -211,6 +237,10 @@ describe('humps', function() {
 
     it('decamelizes strings with custom separator', function() {
       expect(humps.decamelize('helloWorld', '-')).toEqual('hello-world');
+    });
+
+    it('decamelizes strings ignoring numbers', function() {
+      expect(humps.decamelize('helloWorld1', '_', true)).toEqual('hello_world1');
     });
   });
 
