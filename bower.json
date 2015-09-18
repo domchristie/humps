@@ -1,7 +1,7 @@
 {
   "name": "humps",
   "main": "humps.js",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "homepage": "https://github.com/domchristie/humps",
   "authors": [
     "Dom Christie <christiedom@gmail.com>"
