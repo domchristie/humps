@@ -1,5 +1,6 @@
 describe('humps', function() {
   'use strict';
+  var actual;
 
   // =========
   // = Setup =
@@ -24,16 +25,16 @@ describe('humps', function() {
     this.complex_obj = {
       attr_one: 'foo',
       attr_two: {
-        nested_attr_1: 'bar'
+        nested_attr1: 'bar'
       },
       attr_three: {
-        nested_attr_2: {
-          nested_attr_3: [{
-            nested_in_array_1: 'baz'
+        nested_attr2: {
+          nested_attr3: [{
+            nested_in_array1: 'baz'
           }, {
-            nested_in_array_2: 'hello'
+            nested_in_array2: 'hello'
           }, {
-            nested_in_array_3: ['world', 'boo']
+            nested_in_array3: ['world', 'boo']
           }]
         }
       }
@@ -96,16 +97,16 @@ describe('humps', function() {
     this.complexCustomObj = {
       'attr-one': 'foo',
       'attr-two': {
-        'nested-attr-1': 'bar'
+        'nested-attr1': 'bar'
       },
       'attr-three': {
-        'nested-attr-2': {
-          'nested-attr-3': [{
-            'nested-in-array-1': 'baz'
+        'nested-attr2': {
+          'nested-attr3': [{
+            'nested-in-array1': 'baz'
           }, {
-            'nested-in-array-2': 'hello'
+            'nested-in-array2': 'hello'
           }, {
-            'nested-in-array-3': ['world', 'boo']
+            'nested-in-array3': ['world', 'boo']
           }]
         }
       }
@@ -157,11 +158,8 @@ describe('humps', function() {
     });
 
     it('decamelizes keys with a custom separator', function() {
-      expect(humps.decamelizeKeys(this.complexCamelObj, '-')).toEqual(this.complexCustomObj);
-    });
-
-    it('decamelizes keys ignoring numbers', function() {
-      expect(humps.decamelizeKeys(this.complexCamelObj, '_', true)).toEqual(this.complexIgnoringNumbersObj);
+      actual = humps.decamelizeKeys(this.complexCamelObj, { separator: '-' })
+      expect(actual).toEqual(this.complexCustomObj);
     });
   });
 
@@ -197,11 +195,8 @@ describe('humps', function() {
     });
 
     it('depascalizes keys with a custom separator', function() {
-      expect(humps.depascalizeKeys(this.complexPascalObj, '-')).toEqual(this.complexCustomObj);
-    });
-
-    it('depascalizes keys ignoring numbers', function() {
-      expect(humps.depascalizeKeys(this.complexPascalObj, '_', true)).toEqual(this.complexIgnoringNumbersObj);
+      actual = this.complexPascalObj, { separator: '-' })
+      expect(humps.depascalizeKeys().toEqual(this.complexCustomObj);
     });
   });
 
@@ -221,7 +216,6 @@ describe('humps', function() {
 
     it('converts PascalCased strings to camelcase', function() {
       expect(humps.camelize('HelloWorld')).toEqual('helloWorld');
-      expect(humps.camelize('HelloWorld')).toEqual('helloWorld');
     });
 
     it('keeps numbers unchanged', function() {
@@ -236,11 +230,8 @@ describe('humps', function() {
     });
 
     it('decamelizes strings with custom separator', function() {
-      expect(humps.decamelize('helloWorld', '-')).toEqual('hello-world');
-    });
-
-    it('decamelizes strings ignoring numbers', function() {
-      expect(humps.decamelize('helloWorld1', '_', true)).toEqual('hello_world1');
+      actual = humps.decamelize('helloWorld', { separator: '-' });
+      expect(actual).toEqual('hello-world');
     });
   });
 

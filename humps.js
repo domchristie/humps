@@ -11,7 +11,7 @@
 
 ;(function(global) {
 
-  var _processKeys = function(convert, obj, separator, ignoreNumbers) {
+  var _processKeys = function(convert, obj, options) {
     if(!_isObject(obj) || _isDate(obj) || _isRegExp(obj) || _isBoolean(obj)) {
       return obj;
     }
@@ -23,14 +23,14 @@
     if(_isArray(obj)) {
       output = [];
       for(l=obj.length; i<l; i++) {
-        output.push(_processKeys(convert, obj[i], separator, ignoreNumbers));
+        output.push(_processKeys(convert, obj[i], options));
       }
     }
     else {
       output = {};
       for(var key in obj) {
         if(obj.hasOwnProperty(key)) {
-          output[convert(key, separator, ignoreNumbers)] = _processKeys(convert, obj[key], separator, ignoreNumbers);
+          output[convert(key, options)] = _processKeys(convert, obj[key], options);
         }
       }
     }
@@ -39,18 +39,11 @@
 
   // String conversion methods
 
-  var separateWords = function(string, separator, ignoreNumbers) {
-    if (typeof separator === 'undefined') {
-      separator = '_';
-    }
+  var separateWords = function(string, options) {
+    options = options || {};
+    var separator = options.separator || '_'
 
-    var regexp = /([a-z])([A-Z0-9])/g;
-
-    if (ignoreNumbers) {
-      regexp = /([a-z])([A-Z])/g;
-    }
-
-    return string.replace(regexp, '$1'+ separator +'$2');
+    return string.replace(/([a-z])([A-Z])/g, '$1'+ separator +'$2');
   };
 
   var camelize = function(string) {
@@ -70,8 +63,8 @@
     return camelized.substr(0, 1).toUpperCase() + camelized.substr(1);
   };
 
-  var decamelize = function(string, separator, ignoreNumbers) {
-    return separateWords(string, separator, ignoreNumbers).toLowerCase();
+  var decamelize = function(string, options) {
+    return separateWords(string, options).toLowerCase();
   };
 
   // Utilities
@@ -109,8 +102,8 @@
     camelizeKeys: function(object) {
       return _processKeys(camelize, object);
     },
-    decamelizeKeys: function(object, separator, ignoreNumbers) {
-      return _processKeys(decamelize, object, separator, ignoreNumbers);
+    decamelizeKeys: function(object, options) {
+      return _processKeys(decamelize, object, options);
     },
     pascalizeKeys: function(object) {
       return _processKeys(pascalize, object);
