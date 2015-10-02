@@ -1,3 +1,6 @@
+var assert = require('assert');
+var humps = require('../humps');
+
 describe('humps', function() {
   'use strict';
   var actual;
@@ -119,11 +122,11 @@ describe('humps', function() {
 
   describe('.camelizeKeys', function() {
     it('converts simple object keys to camelcase', function() {
-      expect(humps.camelizeKeys(this.simple_obj)).toEqual(this.simpleCamelObj);
+      assert.deepEqual(humps.camelizeKeys(this.simple_obj), this.simpleCamelObj);
     });
 
     it('converts complex object keys to camelcase', function() {
-      expect(humps.camelizeKeys(this.complex_obj)).toEqual(this.complexCamelObj);
+      assert.deepEqual(humps.camelizeKeys(this.complex_obj), this.complexCamelObj);
     });
 
     it('does not attempt to process dates', function() {
@@ -135,41 +138,41 @@ describe('humps', function() {
       var convertedObject = {
         aDate: date
       };
-      expect(humps.camelizeKeys(_object)).toEqual(convertedObject);
+      assert.deepEqual(humps.camelizeKeys(_object), convertedObject);
     });
 
     it('converts keys within arrays of objects', function() {
       var array = [{first_name: 'Sam'}, {first_name: 'Jenna'}],
         convertedArray = [{firstName: 'Sam'}, {firstName: 'Jenna'}],
         result = humps.camelizeKeys(array);
-      expect(result).toEqual(convertedArray);
+      assert.deepEqual(result, convertedArray);
       // Ensure it’s an array, and not an object with numeric keys
-      expect(toString.call(result)).toEqual('[object Array]');
+      assert.deepEqual(toString.call(result), '[object Array]');
     });
   });
 
   describe('.decamelizeKeys', function() {
     it('converts simple objects with camelcased keys to underscored', function() {
-      expect(humps.decamelizeKeys(this.simpleCamelObj)).toEqual(this.simple_obj);
+      assert.deepEqual(humps.decamelizeKeys(this.simpleCamelObj), this.simple_obj);
     });
 
     it('converts complex objects with camelcased keys to underscored', function() {
-      expect(humps.decamelizeKeys(this.complexCamelObj)).toEqual(this.complex_obj);
+      assert.deepEqual(humps.decamelizeKeys(this.complexCamelObj), this.complex_obj);
     });
 
     it('decamelizes keys with a custom separator', function() {
-      actual = humps.decamelizeKeys(this.complexCamelObj, { separator: '-' })
-      expect(actual).toEqual(this.complexCustomObj);
+      actual = humps.decamelizeKeys(this.complexCamelObj, { separator: '-' });
+      assert.deepEqual(actual, this.complexCustomObj);
     });
   });
 
   describe('.pascalizeKeys', function() {
     it('converts simple object keys to PascalCase', function() {
-      expect(humps.pascalizeKeys(this.simple_obj)).toEqual(this.simplePascalObj);
+      assert.deepEqual(humps.pascalizeKeys(this.simple_obj), this.simplePascalObj);
     });
 
     it('converts complex object keys to PascalCase', function() {
-      expect(humps.pascalizeKeys(this.complex_obj)).toEqual(this.complexPascalObj);
+      assert.deepEqual(humps.pascalizeKeys(this.complex_obj), this.complexPascalObj);
     });
 
     it('does not attempt to process dates', function() {
@@ -181,71 +184,71 @@ describe('humps', function() {
       var convertedObject = {
         ADate: date
       };
-      expect(humps.pascalizeKeys(_object)).toEqual(convertedObject);
+      assert.deepEqual(humps.pascalizeKeys(_object), convertedObject);
     });
   });
 
   describe('.depascalizeKeys', function() {
     it('converts simple object with PascalCase keys to underscored', function() {
-      expect(humps.depascalizeKeys(this.simplePascalObj)).toEqual(this.simple_obj);
+      assert.deepEqual(humps.depascalizeKeys(this.simplePascalObj), this.simple_obj);
     });
 
     it('converts complex object with PascalCase keys to underscored', function() {
-      expect(humps.depascalizeKeys(this.complexPascalObj)).toEqual(this.complex_obj);
+      assert.deepEqual(humps.depascalizeKeys(this.complexPascalObj), this.complex_obj);
     });
 
     it('depascalizes keys with a custom separator', function() {
-      actual = this.complexPascalObj, { separator: '-' })
-      expect(humps.depascalizeKeys().toEqual(this.complexCustomObj);
+      actual = humps.depascalizeKeys(this.complexPascalObj, { separator: '-' });
+      assert.deepEqual(actual, this.complexCustomObj);
     });
   });
 
   describe('.camelize', function() {
     it('converts underscored strings to camelcase', function() {
-      expect(humps.camelize('hello_world')).toEqual('helloWorld');
+      assert.equal(humps.camelize('hello_world'), 'helloWorld');
     });
 
     it('converts hyphenated strings to camelcase', function() {
-      expect(humps.camelize('hello-world')).toEqual('helloWorld');
-      expect(humps.camelize('hello-world-1')).toEqual('helloWorld1');
+      assert.equal(humps.camelize('hello-world'), 'helloWorld');
+      assert.equal(humps.camelize('hello-world-1'), 'helloWorld1');
     });
 
     it('converts space-separated strings to camelcase', function() {
-      expect(humps.camelize('hello world')).toEqual('helloWorld');
+      assert.equal(humps.camelize('hello world'), 'helloWorld');
     });
 
     it('converts PascalCased strings to camelcase', function() {
-      expect(humps.camelize('HelloWorld')).toEqual('helloWorld');
+      assert.equal(humps.camelize('HelloWorld'), 'helloWorld');
     });
 
     it('keeps numbers unchanged', function() {
-      expect(humps.camelize('-1')).toEqual('-1');
-      expect(humps.camelize('1')).toEqual('1');
+      assert.equal(humps.camelize('-1'), '-1');
+      assert.equal(humps.camelize('1'), '1');
     });
   });
 
   describe('.decamelize', function() {
     it('converts camelcased strings to underscored', function() {
-      expect(humps.decamelize('helloWorld')).toEqual('hello_world');
+      assert.equal(humps.decamelize('helloWorld'), 'hello_world');
     });
 
     it('decamelizes strings with custom separator', function() {
       actual = humps.decamelize('helloWorld', { separator: '-' });
-      expect(actual).toEqual('hello-world');
+      assert.equal(actual, 'hello-world');
     });
   });
 
   describe('.pascalize', function() {
     it('converts underscored strings to PascalCase', function() {
-      expect(humps.pascalize('hello_world')).toEqual('HelloWorld');
+      assert.equal(humps.pascalize('hello_world'), 'HelloWorld');
     });
 
     it('converts hyphenated strings to PascalCase', function() {
-      expect(humps.pascalize('hello-world')).toEqual('HelloWorld');
+      assert.equal(humps.pascalize('hello-world'), 'HelloWorld');
     });
 
     it('converts space-separated strings to PascalCase', function() {
-      expect(humps.pascalize('hello world')).toEqual('HelloWorld');
+      assert.equal(humps.pascalize('hello world'), 'HelloWorld');
     });
   });
 });
