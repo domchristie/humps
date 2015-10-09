@@ -164,6 +164,11 @@ describe('humps', function() {
       actual = humps.decamelizeKeys(this.complexCamelObj, { separator: '-' });
       assert.deepEqual(actual, this.complexCustomObj);
     });
+
+    it('uses a custom split regexp', function() {
+      actual = humps.decamelizeKeys({ attr1: 'foo' }, { split: /(?=[A-Z0-9])/ });
+      assert.deepEqual(actual, { attr_1: 'foo' });
+    });
   });
 
   describe('.pascalizeKeys', function() {
@@ -235,6 +240,15 @@ describe('humps', function() {
     it('decamelizes strings with custom separator', function() {
       actual = humps.decamelize('helloWorld', { separator: '-' });
       assert.equal(actual, 'hello-world');
+    });
+
+    it('does not separate on digits', function() {
+      assert.equal(humps.decamelize('helloWorld1'), 'hello_world1');
+    });
+
+    it('uses a custom split regexp', function() {
+      assert.equal(humps.decamelize('helloWorld1', { split: /(?=[A-Z0-9])/ }),
+        'hello_world_1');
     });
   });
 

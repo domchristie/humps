@@ -41,9 +41,10 @@
 
   var separateWords = function(string, options) {
     options = options || {};
-    var separator = options.separator || '_'
+    var separator = options.separator || '_';
+    var split = options.split || /(?=[A-Z])/;
 
-    return string.replace(/([a-z])([A-Z])/g, '$1'+ separator +'$2');
+    return string.split(split).join(separator);
   };
 
   var camelize = function(string) {
