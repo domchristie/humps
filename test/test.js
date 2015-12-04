@@ -12,17 +12,20 @@ describe('humps', function() {
   beforeEach(function() {
     this.simple_obj = {
       attr_one: 'foo',
-      attr_two: 'bar'
+      attr_two: 'bar',
+      ATTRTHREE: 'buzz'
     };
 
     this.simpleCamelObj = {
       attrOne: 'foo',
-      attrTwo: 'bar'
+      attrTwo: 'bar',
+      ATTRTHREE: 'buzz'
     };
 
     this.simplePascalObj = {
       AttrOne: 'foo',
-      AttrTwo: 'bar'
+      AttrTwo: 'bar',
+      ATTRTHREE: 'buzz'
     };
 
     this.complex_obj = {
