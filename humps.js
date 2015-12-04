@@ -47,7 +47,7 @@
   };
 
   var camelize = function(string) {
-    if (_isNumerical(string)) {
+    if (_isNumerical(string) || _isUpperCase(string)) {
       return string;
     }
     string = string.replace(/[\-_\s]+(.)?/g, function(match, chr) {
@@ -64,6 +64,9 @@
   };
 
   var decamelize = function(string, options) {
+    if( _isUpperCase(string) ) {
+      return string;
+    }
     return separateWords(string, options).toLowerCase();
   };
 
@@ -93,6 +96,10 @@
     obj = obj - 0;
     return obj === obj;
   };
+
+  var _isUpperCase = function(obj) {
+    return obj.toUpperCase()==obj;
+  }
 
   var humps = {
     camelize: camelize,
