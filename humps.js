@@ -51,7 +51,7 @@
       return string;
     }
     string = string.replace(/[\-_\s]+(.)?/g, function(match, chr, offset) {
-      return chr && offset ? chr.toUpperCase() : (offset ? '' : match);
+      return chr && offset ? chr.toUpperCase() : (offset && chr ? '' : match);
     });
     // Ensure 1st char is always lowercase
     return string.substr(0, 1).toLowerCase() + string.substr(1);
