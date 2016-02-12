@@ -43,6 +43,25 @@ describe('humps', function() {
       }
     };
 
+     this.complex_obj_exclude = {
+      attr_one: 'foo',
+      attr_two: {
+        nested_attr1: 'bar'
+      },
+      attr_three: {
+        nested_attr2: {
+          nested_attr3: [{
+            nested_in_array1: 'baz'
+          }, {
+            nested_in_array2: 'hello'
+          }, {
+            nested_in_array3: ['world', 'boo']
+          }]
+        },
+        nested_attr4: 'foo'
+      }
+    };
+
     this.complexCamelObj = {
       attrOne: 'foo',
       attrTwo: {
@@ -76,6 +95,25 @@ describe('humps', function() {
             NestedInArray3: ['world', 'boo']
           }]
         }
+      }
+    };
+
+    this.complexPascalObjExclude = {
+      AttrOne: 'foo',
+      AttrTwo: {
+        NestedAttr1: 'bar'
+      },
+      AttrThree: {
+        nested_attr2: {
+          NestedAttr3: [{
+            NestedInArray1: 'baz'
+          }, {
+            NestedInArray2: 'hello'
+          }, {
+            NestedInArray3: ['world', 'boo']
+          }]
+        },
+        nested_attr4: 'foo'
       }
     };
 
@@ -114,6 +152,25 @@ describe('humps', function() {
         }
       }
     };
+
+    this.complexCamelObjExclude = {
+      attrOne: 'foo',
+      attrTwo: {
+        nestedAttr1: 'bar'
+      },
+      attrThree: {
+        nested_attr2: {
+          nestedAttr3: [{
+            nestedInArray1: 'baz'
+          }, {
+            nestedInArray2: 'hello'
+          }, {
+            nestedInArray3: ['world', 'boo']
+          }]
+        },
+        nested_attr4: 'foo'
+      }
+    };
   });
 
   // =========
@@ -127,6 +184,18 @@ describe('humps', function() {
 
     it('converts complex object keys to camelcase', function() {
       assert.deepEqual(humps.camelizeKeys(this.complex_obj), this.complexCamelObj);
+    });
+
+    it('converts complex object to camelcase, excluding given keys ', function() {
+      assert.deepEqual(humps.camelizeKeys(this.complex_obj_exclude, {
+        keyExclusions: ['nested_attr2', 'nested_attr4']
+      }), this.complexCamelObjExclude);
+    });
+
+    it('converts complex object to camelcase, excluding child keys of given keys', function() {
+      assert.deepEqual(humps.camelizeKeys(this.complex_obj_exclude, {
+        parentKeyExclusions: ['attr_three']
+      }), this.complexCamelObjExclude);
     });
 
     it('does not attempt to process dates', function() {
@@ -179,6 +248,19 @@ describe('humps', function() {
     it('converts complex object keys to PascalCase', function() {
       assert.deepEqual(humps.pascalizeKeys(this.complex_obj), this.complexPascalObj);
     });
+
+    it('converts complex object to PascalCase, excluding given keys ', function() {
+      assert.deepEqual(humps.pascalizeKeys(this.complex_obj_exclude, {
+        keyExclusions: ['nested_attr2', 'nested_attr4']
+      }), this.complexPascalObjExclude);
+    });
+
+    it('converts complex object to PascalCase, excluding child keys of given keys', function() {
+      assert.deepEqual(humps.pascalizeKeys(this.complex_obj_exclude, {
+        parentKeyExclusions: ['attr_three']
+      }), this.complexPascalObjExclude);
+    });
+
 
     it('does not attempt to process dates', function() {
       'work in progress';
