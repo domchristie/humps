@@ -69,11 +69,15 @@ humps.decamelize('helloWorld1', { split: /(?=[A-Z0-9])/ }) // 'hello_world_1'
 
 Same as `humps.decamelize` above.
 
-### `humps.camelizeKeys(object)`
+### `humps.camelizeKeys(object, options)`
 
 Converts object keys to camelCase. It also converts arrays of objects.
 
-### `humps.pascalizeKeys(object)`
+Available options:
+  - keyExclusions (Array): An array of keys, which will be excluded from the camelization process.
+  - parentKeyExclusions (Array): An array of keys, who's child keys will be excluded from the camelization process.
+
+### `humps.pascalizeKeys(object, options)`
 
 Converts object keys to PascalCase. It also converts arrays of objects.
 
