@@ -10,7 +10,7 @@
 
 ;(function(global) {
 
-  var _processKeys = function(convert, obj, options) {
+  var _processKeys = function(convert, obj, options, parentKeyExcluded) {
     if(!_isObject(obj) || _isDate(obj) || _isRegExp(obj) || _isBoolean(obj)) {
       return obj;
     }
@@ -18,6 +18,9 @@
     var output,
         i = 0,
         l = 0;
+
+    var keyExclusions = options && options.keyExclusions || [];
+    var parentKeyExclusions = options && options.parentKeyExclusions || [];
 
     if(_isArray(obj)) {
       output = [];
@@ -27,9 +30,18 @@
     }
     else {
       output = {};
+      var excludeKey = parentKeyExcluded;
+
       for(var key in obj) {
-        if(obj.hasOwnProperty(key)) {
-          output[convert(key, options)] = _processKeys(convert, obj[key], options);
+        var parentKeyExcluded =
+          parentKeyExclusions.indexOf(key) !== -1 ? true : false;
+
+        if(obj.hasOwnProperty(key)
+            && keyExclusions.indexOf(key) === -1
+            && !excludeKey) {
+          output[convert(key, options)] = _processKeys(convert, obj[key], options, parentKeyExcluded);
+        } else {
+          output[key] = _processKeys(convert, obj[key], options, parentKeyExcluded);
         }
       }
     }
@@ -99,14 +111,14 @@
     decamelize: decamelize,
     pascalize: pascalize,
     depascalize: decamelize,
-    camelizeKeys: function(object) {
-      return _processKeys(camelize, object);
+    camelizeKeys: function(object, options) {
+      return _processKeys(camelize, object, options);
     },
     decamelizeKeys: function(object, options) {
       return _processKeys(decamelize, object, options);
     },
-    pascalizeKeys: function(object) {
-      return _processKeys(pascalize, object);
+    pascalizeKeys: function(object, options) {
+      return _processKeys(pascalize, object, options);
     },
     depascalizeKeys: function () {
       return this.decamelizeKeys.apply(this, arguments);
