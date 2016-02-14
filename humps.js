@@ -94,19 +94,31 @@
     return obj === obj;
   };
 
+  // Sets up function which handles processing keys
+  // allowing the convert function to be modified by a callback
+  var _processor = function(convert, callback) {
+    if(typeof(callback) !== 'function') {
+      return convert;
+    }
+
+    return function(string, options) {
+      return callback(string, convert, options);
+    }
+  };
+
   var humps = {
     camelize: camelize,
     decamelize: decamelize,
     pascalize: pascalize,
     depascalize: decamelize,
-    camelizeKeys: function(object) {
-      return _processKeys(camelize, object);
+    camelizeKeys: function(object, callback) {
+      return _processKeys(_processor(camelize, callback), object);
     },
-    decamelizeKeys: function(object, options) {
-      return _processKeys(decamelize, object, options);
+    decamelizeKeys: function(object, options, callback) {
+      return _processKeys(_processor(decamelize, callback), object, options);
     },
-    pascalizeKeys: function(object) {
-      return _processKeys(pascalize, object);
+    pascalizeKeys: function(object, callback) {
+      return _processKeys(_processor(pascalize, callback), object);
     },
     depascalizeKeys: function () {
       return this.decamelizeKeys.apply(this, arguments);

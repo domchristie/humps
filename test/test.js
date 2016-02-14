@@ -149,6 +149,13 @@ describe('humps', function() {
       // Ensure it’s an array, and not an object with numeric keys
       assert.deepEqual(toString.call(result), '[object Array]');
     });
+
+    it('uses a custom convertion callback', function() {
+      actual = humps.camelizeKeys(this.simple_obj, function(key, convert) {
+        return key === 'attr_one' ? key : convert(key);
+      });
+      assert.deepEqual(actual, { attr_one: 'foo', attrTwo: 'bar' });
+    });
   });
 
   describe('.decamelizeKeys', function() {
@@ -168,6 +175,13 @@ describe('humps', function() {
     it('uses a custom split regexp', function() {
       actual = humps.decamelizeKeys({ attr1: 'foo' }, { split: /(?=[A-Z0-9])/ });
       assert.deepEqual(actual, { attr_1: 'foo' });
+    });
+
+    it('uses a custom convertion callback', function() {
+      actual = humps.decamelizeKeys(this.simpleCamelObj, null, function(key, convert, options) {
+        return key === 'attrOne' ? key : convert(key, options);
+      });
+      assert.deepEqual(actual, { attrOne: 'foo', attr_two: 'bar' });
     });
   });
 
@@ -190,6 +204,13 @@ describe('humps', function() {
         ADate: date
       };
       assert.deepEqual(humps.pascalizeKeys(_object), convertedObject);
+    });
+
+    it('uses a custom convertion callback', function() {
+      actual = humps.pascalizeKeys(this.simple_obj, function(key, convert) {
+        return key === 'attr_one' ? key : convert(key);
+      });
+      assert.deepEqual(actual, { attr_one: 'foo', AttrTwo: 'bar' });
     });
   });
 
