@@ -25,6 +25,11 @@ describe('humps', function() {
       AttrTwo: 'bar'
     };
 
+    this.SIMPLE_CAP_OBJ = {
+      ATTR_ONE: 'foo',
+      ATTR_TWO: 'bar'
+    };
+
     this.complex_obj = {
       attr_one: 'foo',
       attr_two: {
@@ -38,6 +43,24 @@ describe('humps', function() {
             nested_in_array2: 'hello'
           }, {
             nested_in_array3: ['world', 'boo']
+          }]
+        }
+      }
+    };
+
+    this.COMPLEX_CAP_OBJ = {
+      ATTR_ONE: 'foo',
+      ATTR_TWO: {
+        NESTED_ATTR1: 'bar'
+      },
+      ATTR_THREE: {
+        NESTED_ATTR2: {
+          NESTED_ATTR3: [{
+            NESTED_IN_ARRAY1: 'baz'
+          }, {
+            NESTED_IN_ARRAY2: 'hello'
+          }, {
+            NESTED_IN_ARRAY3: ['world', 'boo']
           }]
         }
       }
@@ -125,8 +148,16 @@ describe('humps', function() {
       assert.deepEqual(humps.camelizeKeys(this.simple_obj), this.simpleCamelObj);
     });
 
+    it('converts simple all-capital object keys to camelcase', function() {
+      assert.deepEqual(humps.camelizeKeys(this.SIMPLE_CAP_OBJ), this.simpleCamelObj);
+    });
+
     it('converts complex object keys to camelcase', function() {
       assert.deepEqual(humps.camelizeKeys(this.complex_obj), this.complexCamelObj);
+    });
+
+    it('converts complex all-capital object keys to camelcase', function() {
+      assert.deepEqual(humps.camelizeKeys(this.COMPLEX_CAP_OBJ), this.complexCamelObj);
     });
 
     it('does not attempt to process dates', function() {

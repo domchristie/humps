@@ -50,6 +50,10 @@
     if (_isNumerical(string)) {
       return string;
     }
+    // Ensure string is not all uppercase, underscore and numeric
+    if(string === string.match(/[A-Z_\d]*/)[0]){
+      string = string.toLowerCase();
+    }
     string = string.replace(/[\-_\s]+(.)?/g, function(match, chr) {
       return chr ? chr.toUpperCase() : '';
     });
