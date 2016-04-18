@@ -28,10 +28,10 @@ Arrays of objects are also converted
 
 It also accepts a callback which can modify the conversion behavior. For example to prevent conversion of keys containing only uppercase letters or numbers:
 
-    humps.camelizeKeys(obj, function (key, convert) => {
+    humps.camelizeKeys(obj, function (key, convert) {
       return /^[A-Z0-9_]+$/.test(key) ? key : convert(key);
     });
-    humps.decamelizeKeys(obj, function (key, convert, options) => {
+    humps.decamelizeKeys(obj, function (key, convert, options) {
       return /^[A-Z0-9_]+$/.test(key) ? key : convert(key, options);
     });
 
@@ -39,7 +39,7 @@ In order to use the callback with options use the `process` option:
 
     humps.decamelizeKeys(obj, {
         separator: '-',
-        process: function (key, convert, options) => {
+        process: function (key, convert, options) {
           return /^[A-Z0-9_]+$/.test(key) ? key : convert(key, options);
         }
     });
