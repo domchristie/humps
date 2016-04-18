@@ -96,7 +96,9 @@
 
   // Sets up function which handles processing keys
   // allowing the convert function to be modified by a callback
-  var _processor = function(convert, callback) {
+  var _processor = function(convert, options) {
+    var callback = options && 'process' in options ? options.process : options;
+
     if(typeof(callback) !== 'function') {
       return convert;
     }
@@ -111,14 +113,14 @@
     decamelize: decamelize,
     pascalize: pascalize,
     depascalize: decamelize,
-    camelizeKeys: function(object, callback) {
-      return _processKeys(_processor(camelize, callback), object);
+    camelizeKeys: function(object, options) {
+      return _processKeys(_processor(camelize, options), object);
     },
-    decamelizeKeys: function(object, options, callback) {
-      return _processKeys(_processor(decamelize, callback), object, options);
+    decamelizeKeys: function(object, options) {
+      return _processKeys(_processor(decamelize, options), object, options);
     },
-    pascalizeKeys: function(object, callback) {
-      return _processKeys(_processor(pascalize, callback), object);
+    pascalizeKeys: function(object, options) {
+      return _processKeys(_processor(pascalize, options), object);
     },
     depascalizeKeys: function () {
       return this.decamelizeKeys.apply(this, arguments);

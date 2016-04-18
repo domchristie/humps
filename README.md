@@ -35,6 +35,15 @@ It also accepts a callback which can modify the conversion behavior. For example
       return /^[A-Z0-9_]+$/.test(key) ? key : convert(key, options);
     });
 
+In order to use the callback with options use the `process` option:
+
+    humps.decamelizeKeys(obj, {
+        separator: '-',
+        process: function (key, convert, options) => {
+          return /^[A-Z0-9_]+$/.test(key) ? key : convert(key, options);
+        }
+    });
+
 API
 ---
 
@@ -78,19 +87,19 @@ humps.decamelize('helloWorld1', { split: /(?=[A-Z0-9])/ }) // 'hello_world_1'
 
 Same as `humps.decamelize` above.
 
-### `humps.camelizeKeys(object, callback)`
+### `humps.camelizeKeys(object, options)`
 
 Converts object keys to camelCase. It also converts arrays of objects.
 
-### `humps.pascalizeKeys(object, callback)`
+### `humps.pascalizeKeys(object, options)`
 
 Converts object keys to PascalCase. It also converts arrays of objects.
 
-### `humps.decamelizeKeys(object, options, callback)`
+### `humps.decamelizeKeys(object, options)`
 
 Separates camelCased object keys with an underscore. It also converts arrays of objects. See `humps.decamelize` for details of options.
 
-### `humps.depascalizeKeys(object, options, callback)`
+### `humps.depascalizeKeys(object, options)`
 
 See `humps.decamelizeKeys`.
 

@@ -178,8 +178,17 @@ describe('humps', function() {
     });
 
     it('uses a custom convertion callback', function() {
-      actual = humps.decamelizeKeys(this.simpleCamelObj, null, function(key, convert, options) {
+      actual = humps.decamelizeKeys(this.simpleCamelObj, function(key, convert, options) {
         return key === 'attrOne' ? key : convert(key, options);
+      });
+      assert.deepEqual(actual, { attrOne: 'foo', attr_two: 'bar' });
+    });
+
+    it('uses a custom convertion callback as an option', function() {
+      actual = humps.decamelizeKeys(this.simpleCamelObj, {
+        process: function(key, convert, options) {
+          return key === 'attrOne' ? key : convert(key, options);
+        }
       });
       assert.deepEqual(actual, { attrOne: 'foo', attr_two: 'bar' });
     });
