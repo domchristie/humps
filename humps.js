@@ -1,6 +1,7 @@
 // =========
 // = humps =
 // =========
+// version 0.7.0
 // Underscore-to-camelCase converter (and vice versa)
 // for strings and object keys
 
@@ -11,7 +12,7 @@
 ;(function(global) {
 
   var _processKeys = function(convert, obj, options) {
-    if(!_isObject(obj) || _isDate(obj) || _isRegExp(obj) || _isBoolean(obj)) {
+    if(!_isObject(obj) || _isDate(obj) || _isRegExp(obj) || _isBoolean(obj) || _isFile(obj)) {
       return obj;
     }
 
@@ -81,6 +82,9 @@
   var _isDate = function(obj) {
     return toString.call(obj) == '[object Date]';
   };
+  var _isFile = function(obj) {
+    return toString.call(obj) == '[object File]';
+  }
   var _isRegExp = function(obj) {
     return toString.call(obj) == '[object RegExp]';
   };
