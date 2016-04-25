@@ -97,7 +97,7 @@
   // Sets up function which handles processing keys
   // allowing the convert function to be modified by a callback
   var _processor = function(convert, options) {
-    var callback = options && 'process' in options ? options.process : options;
+    var callback = options && _isObject(options) && 'process' in options ? options.process : options;
 
     if(typeof(callback) !== 'function') {
       return convert;
