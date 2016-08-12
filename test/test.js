@@ -150,6 +150,20 @@ describe('humps', function() {
       assert.deepEqual(toString.call(result), '[object Array]');
     });
 
+    describe("when the value is a function", function() {
+      it('converts the key and assigns the function', function() {
+        function myFunction() {
+        }
+        var _object = {
+          a_function: myFunction
+        };
+
+        var result = humps.camelizeKeys(_object);
+        // deepEqual treats functions as the same as an empty object
+        assert.strictEqual(result.aFunction, myFunction);
+      });
+    });
+
     it('uses a custom convertion callback', function() {
       actual = humps.camelizeKeys(this.simple_obj, function(key, convert) {
         return key === 'attr_one' ? key : convert(key);
@@ -182,6 +196,20 @@ describe('humps', function() {
         return key === 'attrOne' ? key : convert(key, options);
       });
       assert.deepEqual(actual, { attrOne: 'foo', attr_two: 'bar' });
+    });
+
+    describe("when the value is a function", function() {
+      it('converts the key and assigns the function', function() {
+        function myFunction() {
+        }
+        var _object = {
+          aFunction: myFunction
+        };
+
+        var result = humps.decamelizeKeys(_object);
+        // deepEqual treats functions as the same as an empty object
+        assert.strictEqual(result.a_function, myFunction);
+      });
     });
 
     it('uses a custom convertion callback as an option', function() {

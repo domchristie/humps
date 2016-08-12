@@ -11,7 +11,7 @@
 ;(function(global) {
 
   var _processKeys = function(convert, obj, options) {
-    if(!_isObject(obj) || _isDate(obj) || _isRegExp(obj) || _isBoolean(obj)) {
+    if(!_isObject(obj) || _isDate(obj) || _isRegExp(obj) || _isBoolean(obj) || _isFunction(obj)) {
       return obj;
     }
 
@@ -72,6 +72,9 @@
 
   var toString = Object.prototype.toString;
 
+  var _isFunction = function(obj) {
+    return typeof(obj) === 'function';
+  };
   var _isObject = function(obj) {
     return obj === Object(obj);
   };
