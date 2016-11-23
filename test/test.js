@@ -288,6 +288,16 @@ describe('humps', function() {
       assert.equal(humps.camelize('-1'), '-1');
       assert.equal(humps.camelize('1'), '1');
     });
+
+    it('keeps underscore prefix unchanged', function() {
+      assert.equal(humps.camelize('_hello_world'), '_helloWorld');
+      assert.equal(humps.camelize('__hello_world'), '__helloWorld');
+    });
+
+    it('keeps underscore suffix unchanged', function() {
+      assert.equal(humps.camelize('_hello_world_'), '_helloWorld_');
+      assert.equal(humps.camelize('__hello_world_'), '__helloWorld_');
+    });
   });
 
   describe('.decamelize', function() {
@@ -307,6 +317,16 @@ describe('humps', function() {
     it('uses a custom split regexp', function() {
       assert.equal(humps.decamelize('helloWorld1', { split: /(?=[A-Z0-9])/ }),
         'hello_world_1');
+    });
+
+    it('keeps underscore prefix unchanged', function() {
+      assert.equal(humps.decamelize('_helloWorld'), '_hello_world');
+      assert.equal(humps.decamelize('__helloWorld'), '__hello_world');
+    });
+
+    it('keeps underscore suffix unchanged', function() {
+      assert.equal(humps.decamelize('_helloWorld_'), '_hello_world_');
+      assert.equal(humps.decamelize('__helloWorld_'), '__hello_world_');
     });
   });
 
