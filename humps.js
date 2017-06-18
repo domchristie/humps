@@ -134,6 +134,7 @@
     define(humps);
   } else if (typeof module !== 'undefined' && module.exports) {
     module.exports = humps;
+    global.humps = humps;
   } else {
     global.humps = humps;
   }
