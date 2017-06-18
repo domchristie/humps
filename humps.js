@@ -28,7 +28,7 @@
     else {
       output = {};
       for(var key in obj) {
-        if(obj.hasOwnProperty(key)) {
+        if(Object.prototype.hasOwnProperty.call(obj, key)) {
           output[convert(key, options)] = _processKeys(convert, obj[key], options);
         }
       }
