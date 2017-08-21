@@ -24,6 +24,8 @@
       for(l=obj.length; i<l; i++) {
         output.push(_processKeys(convert, obj[i], options));
       }
+    } else if(_isObject(options) && options.plainOnly && !_isPlainObject(obj)) {
+      return obj;
     }
     else {
       output = {};
@@ -77,6 +79,9 @@
   };
   var _isObject = function(obj) {
     return obj === Object(obj);
+  };
+  var _isPlainObject = function(obj) {
+    return Object.getPrototypeOf(obj) === Object.prototype;
   };
   var _isArray = function(obj) {
     return toString.call(obj) == '[object Array]';

@@ -114,6 +114,20 @@ describe('humps', function() {
         }
       }
     };
+
+    this.complicated_object = {
+      attr_one: 'foo',
+      attr_two: new (function() {
+        this.attr_three = 'bar';
+      })
+    };
+
+    this.complicatedObject = {
+      attrOne: 'foo',
+      attrTwo: new (function() {
+        this.attrThree = 'bar';
+      })
+    };
   });
 
   // =========
@@ -219,6 +233,17 @@ describe('humps', function() {
         }
       });
       assert.deepEqual(actual, { attrOne: 'foo', attr_two: 'bar' });
+    });
+
+    it('converts complicated objects with camelcased keys to underscored', function() {
+      assert.deepEqual(humps.decamelizeKeys(this.complicatedObject), this.complicated_object);
+    });
+
+    it('skip complicated objects with `plainOnly` option', function() {
+      assert.deepEqual(
+        humps.decamelizeKeys(this.complicatedObject, { plainOnly: true }).attr_two,
+        this.complicatedObject.attrTwo
+      );
     });
   });
 
