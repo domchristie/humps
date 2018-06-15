@@ -10,8 +10,16 @@
 
 ;(function(global) {
 
+  var _simpleCopyObject = function(obj) {
+    var objCopy = {};
+    for (var key in obj) {
+      objCopy[key] = obj[key];
+    }
+    return objCopy;
+  }
+
   var _processKeys = function(convert, obj, options) {
-    if(!_isObject(obj) || _isDate(obj) || _isRegExp(obj) || _isBoolean(obj) || _isFunction(obj)) {
+    if (!_isObject(obj) || _isDate(obj) || _isRegExp(obj) || _isBoolean(obj) || _isFunction(obj)) {
       return obj;
     }
 
@@ -19,21 +27,43 @@
         i = 0,
         l = 0;
 
-    if(_isArray(obj)) {
+    if (_isArray(obj)) {
       output = [];
-      for(l=obj.length; i<l; i++) {
+      for (l = obj.length; i < l; i++) {
         output.push(_processKeys(convert, obj[i], options));
       }
-    }
-    else {
+    } else {
+      if (options && typeof options.depth !== 'undefined') {
+        options = _simpleCopyObject(options);
+        options.depth--;
+        isDepthReached = options.depth < 0;
+        if (isDepthReached) {
+          return obj;
+        }
+      }
+
       output = {};
-      for(var key in obj) {
-        if(Object.prototype.hasOwnProperty.call(obj, key)) {
+      for (var key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
           output[convert(key, options)] = _processKeys(convert, obj[key], options);
         }
       }
     }
     return output;
+  };
+
+  // Sets up function which handles processing keys
+  // allowing the convert function to be modified by a callback
+  var _processor = function(convert, options) {
+    var callback = options && 'process' in options ? options.process : options;
+
+    if (typeof(callback) !== 'function') {
+      return convert;
+    }
+
+    return function(string, options) {
+      return callback(string, convert, options);
+    }
   };
 
   // String conversion methods
@@ -97,33 +127,19 @@
     return obj === obj;
   };
 
-  // Sets up function which handles processing keys
-  // allowing the convert function to be modified by a callback
-  var _processor = function(convert, options) {
-    var callback = options && 'process' in options ? options.process : options;
-
-    if(typeof(callback) !== 'function') {
-      return convert;
-    }
-
-    return function(string, options) {
-      return callback(string, convert, options);
-    }
-  };
-
   var humps = {
     camelize: camelize,
     decamelize: decamelize,
     pascalize: pascalize,
     depascalize: decamelize,
     camelizeKeys: function(object, options) {
-      return _processKeys(_processor(camelize, options), object);
+      return _processKeys(_processor(camelize, options), object, options);
     },
     decamelizeKeys: function(object, options) {
       return _processKeys(_processor(decamelize, options), object, options);
     },
     pascalizeKeys: function(object, options) {
-      return _processKeys(_processor(pascalize, options), object);
+      return _processKeys(_processor(pascalize, options), object, options);
     },
     depascalizeKeys: function () {
       return this.decamelizeKeys.apply(this, arguments);
