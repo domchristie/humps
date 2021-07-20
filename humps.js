@@ -50,11 +50,21 @@
     if (_isNumerical(string)) {
       return string;
     }
-    string = string.replace(/[\-_\s]+(.)?/g, function(match, chr) {
-      return chr ? chr.toUpperCase() : '';
-    });
-    // Ensure 1st char is always lowercase
-    return string.substr(0, 1).toLowerCase() + string.substr(1);
+
+    var camelizedString = string[0].toLowerCase();
+    var i = 1;
+    var len = string.length;
+    while (i < len) {
+      var currentChar = string[i];
+      if (currentChar === "_" || currentChar === "-" || currentChar === " ") {
+        camelizedString += string[i + 1].toUpperCase();
+        i += 2;
+      } else {
+        camelizedString += currentChar;
+        i++;
+      }
+    }
+    return camelizedString;
   };
 
   var pascalize = function(string) {
