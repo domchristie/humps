@@ -41,7 +41,7 @@
   var separateWords = function(string, options) {
     options = options || {};
     var separator = options.separator || '_';
-    var split = options.split || /(?=[A-Z])/;
+    var split = options.split || /(?=[A-Z])|(\d+)/;
 
     return string.split(split).join(separator);
   };
