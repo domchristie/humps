@@ -1,6 +1,8 @@
 humps [![Build status](https://secure.travis-ci.org/domchristie/humps.png)](http://travis-ci.org/#!/domchristie/humps)
 =====
 
+**This project is no longer maintained.**
+
 Underscore-to-camelCase converter (and vice versa) for strings and object keys in JavaScript.
 
 When converting object keys, it will walk the structure, converting any nested objects (or arrays of nested objects) along the way. Handy for converting JSON between JavaScript and Ruby/Rails APIs.
