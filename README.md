@@ -14,37 +14,47 @@ Usage
 
 ### Converting strings
 
-    humps.camelize('hello_world') // 'helloWorld'
-    humps.decamelize('fooBar') // 'foo_bar'
-    humps.decamelize('fooBarBaz', { separator: '-' }) // 'foo-bar-baz'
+```javascript
+humps.camelize('hello_world') // 'helloWorld'
+humps.decamelize('fooBar') // 'foo_bar'
+humps.decamelize('fooBarBaz', { separator: '-' }) // 'foo-bar-baz'
+```
 
 ### Converting object keys
 
-    var object = { attr_one: 'foo', attr_two: 'bar' }
-    humps.camelizeKeys(object); // { attrOne: 'foo', attrTwo: 'bar' }
+```javascript
+var object = { attr_one: 'foo', attr_two: 'bar' }
+humps.camelizeKeys(object); // { attrOne: 'foo', attrTwo: 'bar' }
+```
 
 Arrays of objects are also converted
 
-    var array = [{ attr_one: 'foo' }, { attr_one: 'bar' }]
-    humps.camelizeKeys(array); // [{ attrOne: 'foo' }, { attrOne: 'bar' }]
+```javascript
+var array = [{ attr_one: 'foo' }, { attr_one: 'bar' }]
+humps.camelizeKeys(array); // [{ attrOne: 'foo' }, { attrOne: 'bar' }]
+```
 
 It also accepts a callback which can modify the conversion behavior. For example to prevent conversion of keys containing only uppercase letters or numbers:
 
-    humps.camelizeKeys(obj, function (key, convert) {
-      return /^[A-Z0-9_]+$/.test(key) ? key : convert(key);
-    });
-    humps.decamelizeKeys(obj, function (key, convert, options) {
-      return /^[A-Z0-9_]+$/.test(key) ? key : convert(key, options);
-    });
+```javascript
+humps.camelizeKeys(obj, function (key, convert) {
+  return /^[A-Z0-9_]+$/.test(key) ? key : convert(key);
+});
+humps.decamelizeKeys(obj, function (key, convert, options) {
+  return /^[A-Z0-9_]+$/.test(key) ? key : convert(key, options);
+});
+```
 
 In order to use the callback with options use the `process` option:
 
-    humps.decamelizeKeys(obj, {
-        separator: '-',
-        process: function (key, convert, options) {
-          return /^[A-Z0-9_]+$/.test(key) ? key : convert(key, options);
-        }
-    });
+```javascript
+humps.decamelizeKeys(obj, {
+    separator: '-',
+    process: function (key, convert, options) {
+      return /^[A-Z0-9_]+$/.test(key) ? key : convert(key, options);
+    }
+});
+```
 
 API
 ---
